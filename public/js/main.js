@@ -21,49 +21,45 @@ function preload() {
 function create() {
 	
 	//  We're going to be using physics, so enable the Arcade Physics system
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.P2JS);
 	
 
     //  A simple background for our game
     game.add.sprite(0, 0, 'grid');
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = game.add.group();
-	lines = game.add.group();
-
-    //  We will enable physics for any object that is created in this group
-    platforms.enableBody = true;
-	lines.enableBody = true;
-	
+//    //  The platforms group contains the ground and the 2 ledges we can jump on
+	platforms = game.add.group();
+//	lines = game.add.group();	
 
     // Here we create the ground.
-    var borderTop = platforms.create(0, -3, 'topBorder');
-    borderTop.body.immovable = true;
+    var borderTop = platforms.create(590, 6, 'topBorder');    
 	
-	var borderBottom = platforms.create(0, 584, 'bottomBorder');
-    borderBottom.body.immovable = true;
+	var borderBottom = platforms.create(590, 593, 'bottomBorder');
 	
-	var borderLeft = platforms.create(-3, 0, 'leftBorder');
-    borderLeft.body.immovable = true;
+	var borderLeft = platforms.create(6, 290, 'leftBorder');
 	
-	var borderRight = platforms.create(1164, 0, 'rightBorder');
-    borderRight.body.immovable = true;	
+	var borderRight = platforms.create(1172, 290, 'rightBorder');
 	
-	
-	player = game.add.sprite(game.world.centerX, game.world.centerY, 'motoVerte');
-	player.anchor.setTo(0.5, 0.5);	
+	game.physics.p2.enable([platforms]);
+//	
+	borderBottom.body.static= true;
+	borderLeft.body.static= true;
+	borderRight.body.static= true;
+	borderTop.body.static= true;
+	 
+	player = game.add.sprite(game.world.centerX, game.world.centerY, 'motoVerte');	
 
     //  We need to enable physics on the player
-    game.physics.arcade.enable(player);
+    game.physics.p2.enable(player);
 	
-	player.body.drag.set(100);
-    player.body.maxVelocity.set(100);
+//	player.body.drag.set(100);
+//    player.body.maxVelocity.set(100);
 
     //  Player physics properties. Give the little guy a slight bounce.
     /*player.body.bounce.y = 0.3;
     player.body.gravity.y = 400;*/
-    player.body.collideWorldBounds = true;
-	
+//    player.body.collideWorldBounds = true;
+//	
 	cursors = game.input.keyboard.createCursorKeys();
 	spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
@@ -73,7 +69,7 @@ function create() {
 
 function update() {
 	
-	var hitPlatform = game.physics.arcade.collide(player, platforms);	
+//	var hitPlatform = game.physics.p2.collide(player, platforms);	
 	
 	if(spaceKey.isDown){		
 		var line = lines.create(player.body.x+23,player.body.y+7,'greenLine');
@@ -83,37 +79,35 @@ function update() {
 	
 	moveMoto(player);
 	
-	if(hitPlatform){
-		player.animations.stop();
-		player.body.velocity.x = 0;
-		player.body.velocity.y=0;
-		
-		console.log("coucou");
-	}
+//	if(hitPlatform){
+//		player.animations.stop();
+//		player.body.velocity.x = 0;
+//		player.body.velocity.y=0;
+//		
+//		console.log("coucou");
+//	}
     	
 }
 
 
 function moveMoto(player){   
-	if(movingMoto)game.physics.arcade.velocityFromAngle(player.angle, -100, player.body.velocity);
-	if (cursors.left.isDown)
-	{
-		player.body.angularVelocity = -150;
-	}
-	else if (cursors.right.isDown)
-	{
-		player.body.angularVelocity = 150;
-	}
-	
+	if(movingMoto)player.body.moveForward(100);
 	else {
-		player.body.angularVelocity = 0;
+		player.body.velocity.x = 0;
+		player.body.velocity.y = 0; 
 	}
+	if (cursors.left.isDown)player.body.rotateLeft(80);
+	
+	
+	else if (cursors.right.isDown)player.body.rotateRight(80);
+	
+	else player.body.setZeroRotation();
 }
 
 function startMoto(){
 	if (!movingMoto){
 		movingMoto= true;
-		game.physics.arcade.velocityFromAngle(player.angle, -100, player.body.velocity);
+		player.body.moveForward(100);
 		console.log("nique ta mere");
 	}
 }
