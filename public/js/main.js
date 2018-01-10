@@ -5,6 +5,8 @@ var score = 0;
 var scoreText;
 var spaceKey;
 var movingMoto = false;
+var angleB;
+var height = 30;
 
 
 function preload() {
@@ -71,13 +73,30 @@ function update() {
 	
 //	game.physics.p2.enable([lines]);	
 	
+	
+//	var hitLine = game.physics.arcade.collide(player, lines);
+	
+	
+	if(player.body.angle>=0 && player.body.angle <180){
+		if(player.body.angle < 90)angleB = 90 - player.body.angle;
+		if(player.body.angle >= 90)angleB = 90 + player.body.angle;
+	}
+
+	if(player.body.angle>=180 && player.body.angle<=-180 && player.body.angle<0){
+		if(player.body.angle < -90)angleB = 180 + player.body.angle;
+		if(player.body.angle > -90)angleB = 90 + player.body.angle;
+	}
 	if(spaceKey.isDown & movingMoto){		
-		var line = lines.create(player.x,player.y,'greenLine');
+		//var line = lines.create(player.x,player.y,'greenLine');
+		var line = lines.create(math.cos(math.unit(player.body.angle,'deg'))*height-player.body.x, math.cos(math.unit(angleB,'deg'))*height+player.body.y);
 		//line.body.static = true;				
 	}
-	//var hitLine = game.physics.arcade.collide(player, lines);
+	
+
 	
 	moveMoto(player);
+		
+	console.log(player.body.angle);
 	
 //	if(hitPlatform){
 //		player.animations.stop();
@@ -96,8 +115,7 @@ function moveMoto(player){
 		player.body.velocity.x = 0;
 		player.body.velocity.y = 0; 
 	}
-	if (cursors.left.isDown)player.body.rotateLeft(60);
-	
+	if (cursors.left.isDown)player.body.rotateLeft(60);	
 	
 	else if (cursors.right.isDown)player.body.rotateRight(60);
 	
