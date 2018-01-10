@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>tron.io</title>
+</head>
+<body>
+	<h1>TEST CHAT</h1>
+	<form action="/" method="post" id="chatForm">
+		<input type="text" name="message" id="message" placeholder="Entrez votre message ici" autofocus>
+		<input type="submit" value="Envoyer">
+	</form>
+
+	<div id="chatContent">
+		
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		var socket = io.connect('10.31.0.128:8080');
+
+		var pseudo = prompt('Entrez votre pseudo');
+		socket.emit('new_user', pseudo);
+
+
+		socket.on('message', function(data) {
+        	addMessage(data.pseudo, data.message);
+    	});
+
+    	socket.on('new_user', function(new_user) {
+    		$('#chatContent').prepend('<p>' + pseudo + ' joined the chat room</p>');
+    	});
+
+    	$('#chatForm').submit(function(){
+    		var message = $('#message').val();
+    		socket.emit('message', message);
+    		addMessage(pseudo, message);
+    		$('#message').val('').focus();
+    		return false;
+    	});
+
+    	function addMessage(pseudo, message) {
+    		$('#chatContent').prepend('<p><strong>' + pseudo + ' : </strong>' + message + '</p>');
+    	}
+	</script>
+</body>
+</html>
