@@ -1,11 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>tron.io</title>
-</head>
-<body>
-	<h1>Express.js</h1>
-	<p>Everything is setted up</p>
-</body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no">	
+		<meta name="title" content="Tron.io" />
+		<meta name="description" content="" />
+		
+		<link href="styles/index.css" rel="stylesheet" type="text/css"/>
+		
+		<title>Tron.io</title>
+	</head>
+
+	<body>
+		<div id="home">
+			<div>
+				<h1>Tron.io</h1>
+			</div>
+			<div class="pseudoDiv">
+				<form class="pseudoForm">
+					<p><input class="pseudoInput" type="text" placeholder="Entrer votre pseudo..."></p>
+					<input class="pseudoButton" type="button" value="Jouer" id="play">
+				</form>
+			</div>
+		</div>
+		<div id="gameDiv" class="" style="display: none; text-align: center">
+			<input class="pseudoButton" type="button" style="margin:50px" value="Quitter" id="quit" onClick="startMoto()">
+		</div>
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script src="node_modules/phaser-ce/build/phaser.js"></script>
+		<script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+		<script src="js/main.js"></script>			
+		<script>			
+			$(document).ready(function($){
+				$('#play').click(function(e){
+					$('#home').hide();
+					$('#gameDiv').show();
+				});
+				$('#quit').click(function(e){
+					$('#gameDiv').hide();
+					$('#home').show();
+				});
+			});			
+		</script>
+	</body>
+	
 </html>

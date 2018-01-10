@@ -1,0 +1,70 @@
+/* CSS Document */
+
+@font-face {
+	font-family: 'TronFont';
+	src: url('../font/Tr2n.ttf');
+}
+
+input:focus {
+	     outline:  none;
+	}
+
+
+body{
+	background-color: black
+}
+
+h1{
+	font-family: TronFont, sans-serif;
+	color: #7DFDFE;
+	text-align: center;
+	font-size: 100px;
+	animation: neon1 1.5s ease-in-out infinite alternate;
+}
+
+.pseudoForm{
+	text-align: center
+}
+
+.pseudoInput{
+	border: solid 1px #7DFDFE  ;
+	height: 40px;
+	width: 300px;
+	border-radius: 20px;
+	text-align: center;
+	font-size: 20px;
+	background-color: black;
+	color: #7DFDFE;
+	
+}
+
+.pseudoButton{
+	border: solid 1px #7DFDFE outset;
+	height: 40px;
+	width: 150px;
+	border-radius: 20px;	
+	font-size: 20px;
+	background-color: black;
+	color: #7DFDFE;
+	cursor: pointer;
+	animation: neon1 1.5s ease-in-out infinite alternate;
+	font-family: TronFont, sans-serif;
+}
+
+.pseudoDiv{
+	position: absolute;
+	top: 50%; /* poussé de la moitié de hauteur du référent */
+	transform: translateY(-50%);
+	left: 50%;
+	transform: translateX(-50%);
+	/* tiré de la moitié de sa propre hauteur */
+}
+
+@-webkit-keyframes neon1 {
+  from {
+    text-shadow:0 0 10px #fff, 0 0 20px #7DFDFE, 0 0 30px #7DFDFE,0 0 40px #55ADAD;
+  }
+  to {
+    text-shadow:0 0 5px #fff, 0 0 8px #7DFDFE, 0 0 13px #7DFDFE,0 0 16px #55ADAD;
+  }
+}
