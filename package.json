@@ -5,6 +5,7 @@
     "ejs": "^2.5.7",
     "expressjs": "^1.0.1",
     "nodemon": "^1.12.1",
-    "socketio": "^1.0.0"
+    "socketio": "^1.0.0",
+    "socket.io": "^1.7.3"
   }
 }

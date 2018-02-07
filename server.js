@@ -5,6 +5,7 @@ var path = require('path');
 var routes = require('./routes/routes');
 
 var app = express();
+app.use('/js',express.static(__dirname + '/js'));
 
 app.use(express.static(__dirname + '/public'));
 
